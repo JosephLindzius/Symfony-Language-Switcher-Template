@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            nav>ul>li {
+                display: inline;
+                padding-right: 5px;
+            }
+
+            ul{
+                list-style: none;
+            }
+
+        </style>
+    </head>
+    <body>
+    <nav class="navbar bg-dark">
+        <ul>
+            <li><a href="{{ path('homepage') }}">{{'Home' | trans}}</a></li>
+            <li><a href="{{ path('profile') }}">{{'Profile' | trans}}</a></li>
+        </ul>
+    </nav>{#put the form in an variable#}
+
+    {% set switcherForm = switcher.getLanguageSwitcherForm() %}
+
+    {#display the form above#}
+    {{ form_start(switcherForm, {'attr': {'id': 'language-switcher-form'}}) }}
+    {{ form_widget(switcherForm.language) }}
+    {{ form_end(switcherForm) }}
+
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    <script>
+        document.querySelector('#language-switcher-form select').addEventListener("change", function(){
+            document.querySelector('#language-switcher-form').submit();
+        })
+
+    </script>
+    </body>
+</html>
